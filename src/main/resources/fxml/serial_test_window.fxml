@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vbParent" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" StackPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SerialTestController">
+         <children>
+            <HBox prefHeight="0.0" prefWidth="0.0" VBox.vgrow="NEVER">
+               <children>
+                  <ComboBox fx:id="cbPorts" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></ComboBox>
+                  <Button fx:id="btnConnect" mnemonicParsing="false" onAction="#onConnect" text="Połącz">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="btnDisconnect" mnemonicParsing="false" onAction="#onDisconnect" text="Rozłącz">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnRefresh" mnemonicParsing="false" onAction="#onRefresh" text="Odśwież">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></Button>
+            <Button fx:id="btnClearConsole" layoutX="302.0" layoutY="15.0" mnemonicParsing="false" onAction="#onClearConsole" text="Wyczyść konsole">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+                  <ProgressIndicator fx:id="busyIndicator" visible="false" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0" VBox.vgrow="NEVER" />
+            <HBox prefHeight="0.0" prefWidth="0.0" VBox.vgrow="NEVER">
+               <children>
+                  <Label alignment="CENTER" text="Bajty (0-255)">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="3.0" />
+                     </padding></Label>
+                  <TextField fx:id="txtCommand" text="03 07">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></TextField>
+                  <Button fx:id="btnSend" mnemonicParsing="false" onAction="#onSend" text="Wyślij">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" VBox.vgrow="NEVER" />
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <TextArea fx:id="txtConsole" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/serial_test_window.css" HBox.hgrow="SOMETIMES">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Consolas" size="12.0" />
+                     </font></TextArea>
+                  <TextArea fx:id="txtLog" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin></TextArea>
+               </children>
+            </HBox>
+         </children>
+         <StackPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </StackPane.margin>
+      </VBox>
