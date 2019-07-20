@@ -1,18 +1,25 @@
 import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortDataListener;
+import com.fazecast.jSerialComm.SerialPortEvent;
 import com.fazecast.jSerialComm.SerialPortInvalidPortException;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.ObjectBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
+import javax.xml.bind.DatatypeConverter;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
-public class SerialTestController {
-
-    private SerialPort m_port;
+public class SerialTestController implements  Rej006.PropertyChangedListener {
 
     @FXML
     private ProgressIndicator busyIndicator;
@@ -44,6 +51,8 @@ public class SerialTestController {
     @FXML
     private Button btnConnect;
 
+    private Rej006 m_rej006;
+
     @FXML
     public void initialize() {
         onRefresh();
@@ -63,92 +72,31 @@ public class SerialTestController {
     @FXML
     public void onConnect() {
         String portName = (String) cbPorts.getSelectionModel().getSelectedItem();
-        onLog("Connecting to port: " + portName);
 
-        try {
-            m_port = SerialPort.getCommPort(portName);
+        m_rej006 = new Rej006(portName);
 
-            m_port.setBaudRate(115200);
-            m_port.setNumStopBits(SerialPort.ONE_STOP_BIT);
-            m_port.setNumDataBits(8);
-            m_port.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
-            m_port.setParity(SerialPort.NO_PARITY);
+        m_rej006.addPropertyChangeListener(this);
 
-            boolean isOpen = m_port.openPort(0);
+        m_rej006.open();
 
-            if (isOpen) {
-                btnDisconnect.setDisable(false);
-                btnConnect.setDisable(true);
-                cbPorts.setDisable(true);
-                btnRefresh.setDisable(true);
-                txtCommand.setDisable(false);
-                btnSend.setDisable(false);
-                onLog("Connected on port: " + portName);
-            } else {
-                onLog("Could not open port: " + portName);
-            }
-        } catch (SerialPortInvalidPortException|NullPointerException ex) {
-            onError("Error while connecting to port: " + portName, ex);
-        }
     }
 
     @FXML
     public void onDisconnect() {
-
-        // TODO cancel any current transmission
-
-        onLog("Closing port: " + m_port.getSystemPortName());
-        if (m_port != null) {
-            m_port.closePort();
-        }
-
-        btnDisconnect.setDisable(true);
-        btnConnect.setDisable(false);
-        cbPorts.setDisable(false);
-        btnRefresh.setDisable(false);
-        txtCommand.setDisable(true);
-        btnSend.setDisable(true);
+        m_rej006.close();
     }
 
     @FXML
     public void onSend() {
-        String hexString = txtCommand.getText();
-        String[] hexBytes = hexString.split("\\s+");
-
-        byte[] bytes = new byte[hexBytes.length];
-        try {
-            for(int i=0;i<hexBytes.length; i++) {
-                String hexByte = hexBytes[i];
-                char low = hexByte.charAt(1);
-                char hi = hexByte.charAt(0);
-
-                int value = Character.digit(low, 16) + Character.digit(hi, 16) << 4;
-                bytes[i] = (byte)(value &0xff);
-            }
-        }
-        catch (IndexOutOfBoundsException ex) {
-            onError("Command parse error", ex);
-            return;
-        }
-
-        onLog("Writing bytes: " + hexString.replaceAll("\\s+", " "));
-        m_port.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 33, 33);
-        int numBytesWritten = 0;
-
-        for(int i=0; i<bytes.length; i++) {
-            m_port.writeBytes(bytes, 1, i);
-            try {
-                Thread.sleep(33);
-            }
-            catch (InterruptedException ex) {
-                onError("Write timeout cancelled", ex);
-                return;
-            }
-        }
-
-        onLog("Written " + numBytesWritten + " bytes");
+        m_rej006.requestID();
+        m_rej006.requestFirmware();
     }
 
+    @FXML
+    public void onClearConsole() {
+        txtLog.clear();
+        txtConsole.clear();
+    }
 
     private String timestamp() {
         return new SimpleDateFormat("HH:mm:ss.SSS").format(new Date());
@@ -158,15 +106,23 @@ public class SerialTestController {
         txtLog.appendText(timestamp() + " - " + message + "\n");
     }
 
-    private void onDataReceived() {
-
-    }
-
-    private void onDataSend() {
-
-    }
-
     private void onError(String message, Exception ex) {
         onLog("[ERROR] " + message + ", reason: " + ex.getMessage());
+    }
+
+
+    @Override
+    public void onPropertyChanged(Rej006.Property property, Object value) {
+        switch (property) {
+            case NAME:
+                onLog("Name: " + value.toString());
+                break;
+            case ID:
+                onLog("Id: " + value.toString());
+                break;
+            case FIRMWARE:
+                onLog("Firmware: " + value.toString());
+                break;
+        }
     }
 }

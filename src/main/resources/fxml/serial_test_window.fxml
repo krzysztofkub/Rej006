@@ -13,9 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SerialTestController">
-   <children>
-      <VBox fx:id="vbParent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0">
+<VBox fx:id="vbParent" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" StackPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SerialTestController">
          <children>
             <HBox prefHeight="0.0" prefWidth="0.0" VBox.vgrow="NEVER">
                <children>
@@ -27,7 +25,7 @@
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="btnDisconnect" disable="true" mnemonicParsing="false" onAction="#onDisconnect" text="Rozłącz">
+                  <Button fx:id="btnDisconnect" mnemonicParsing="false" onAction="#onDisconnect" text="Rozłącz">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -36,11 +34,12 @@
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></Button>
-                  <ProgressIndicator fx:id="busyIndicator" visible="false">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </ProgressIndicator>
+            <Button fx:id="btnClearConsole" layoutX="302.0" layoutY="15.0" mnemonicParsing="false" onAction="#onClearConsole" text="Wyczyść konsole">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+                  <ProgressIndicator fx:id="busyIndicator" visible="false" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -49,18 +48,18 @@
             <Separator prefWidth="200.0" VBox.vgrow="NEVER" />
             <HBox prefHeight="0.0" prefWidth="0.0" VBox.vgrow="NEVER">
                <children>
-                  <Label alignment="CENTER" text="Komenda  + dane (hex)">
+                  <Label alignment="CENTER" text="Bajty (0-255)">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                      <padding>
                         <Insets top="3.0" />
                      </padding></Label>
-                  <TextField fx:id="txtCommand" disable="true" text="03 07">
+                  <TextField fx:id="txtCommand" text="03 07">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></TextField>
-                  <Button fx:id="btnSend" disable="true" mnemonicParsing="false" onAction="#onSend" text="Wyślij">
+                  <Button fx:id="btnSend" mnemonicParsing="false" onAction="#onSend" text="Wyślij">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></Button>
@@ -69,7 +68,7 @@
             <Separator prefWidth="200.0" VBox.vgrow="NEVER" />
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <TextArea fx:id="txtConsole" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/serial_test_window.css" HBox.hgrow="ALWAYS">
+                  <TextArea fx:id="txtConsole" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/serial_test_window.css" HBox.hgrow="SOMETIMES">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -87,5 +86,3 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </StackPane.margin>
       </VBox>
-   </children>
-</StackPane>
