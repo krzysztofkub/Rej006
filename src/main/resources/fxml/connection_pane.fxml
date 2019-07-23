@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ConnectionPaneController">
+   <children>
+      <ComboBox fx:id="cbPorts" prefWidth="150.0">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+      </ComboBox>
+      <Button fx:id="btnOpen" mnemonicParsing="false" onAction="#onOpen" text="Połącz">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+      </Button>
+      <Button fx:id="btnClose" mnemonicParsing="false" onAction="#onClose" text="Rozłącz">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+      </Button>
+      <Button fx:id="btnRefresh" mnemonicParsing="false" onAction="#onRefresh" text="Odśwież">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+      </Button>
+      <CheckBox fx:id="chkConnection" disable="true" maxHeight="24.0" mnemonicParsing="false" style="-fx-opacity: 1;" text="Połączenie">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+      </CheckBox>
+      <ProgressIndicator fx:id="progIsBusy" maxWidth="24.0" prefHeight="24.0" visible="false">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+      </ProgressIndicator>
+   </children>
+</HBox>

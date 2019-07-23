@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OnlineRegistrationController">
+   <center>
+      <LineChart fx:id="chart" animated="false" createSymbols="false" prefHeight="2000.0" BorderPane.alignment="CENTER">
+        <xAxis>
+          <NumberAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis lowerBound="-20.0" side="LEFT" upperBound="40.0" />
+        </yAxis>
+      </LineChart>
+   </center>
+   <top>
+      <HBox prefHeight="0.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="btnStart" mnemonicParsing="false" onAction="#onStart" text="Start">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnStop" mnemonicParsing="false" onAction="#onStop" text="Stop">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Separator>
+            <HBox fx:id="hbSettingsControls" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <ComboBox fx:id="cbFrequency" prefWidth="75.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="cbAccelerometer" prefWidth="75.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="cbGyroscope" prefWidth="75.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <CheckBox fx:id="chkAX" alignment="CENTER" mnemonicParsing="false" text="AX">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="chkAY" mnemonicParsing="false" text="AY">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="chkAZ" mnemonicParsing="false" text="AZ">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="chkPitch" mnemonicParsing="false" text="Pitch">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="chkRoll" mnemonicParsing="false" text="Roll">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="chkYaw" mnemonicParsing="false" text="Yaw">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>
