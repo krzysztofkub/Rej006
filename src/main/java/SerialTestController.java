@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
-public class SerialTestController implements  Rej006.PropertyChangedListener {
+public class SerialTestController {
 
     @FXML
     private ProgressIndicator busyIndicator;
@@ -51,7 +51,23 @@ public class SerialTestController implements  Rej006.PropertyChangedListener {
     @FXML
     private Button btnConnect;
 
+    @FXML
+    private Label lblName;
+
+    @FXML
+    private Label lblId;
+
+    @FXML
+    private Label lblFirmware;
+
+    @FXML
+    private VBox vbLabels;
+
+    @FXML
+    private CheckBox chkIsOpen;
+
     private Rej006 m_rej006;
+    private Rej006ViewModel m_rej006VM;
 
     @FXML
     public void initialize() {
@@ -74,8 +90,12 @@ public class SerialTestController implements  Rej006.PropertyChangedListener {
         String portName = (String) cbPorts.getSelectionModel().getSelectedItem();
 
         m_rej006 = new Rej006(portName);
+        m_rej006VM = m_rej006.getViewModel();
 
-        m_rej006.addPropertyChangeListener(this);
+        lblName.textProperty().bind(m_rej006VM.nameProperty);
+        lblId.textProperty().bind(m_rej006VM.idProperty.asString());
+        lblFirmware.textProperty().bind(m_rej006VM.firmwareProperty);
+        chkIsOpen.selectedProperty().bind(m_rej006VM.isOpenProperty);
 
         m_rej006.open();
 
@@ -111,18 +131,4 @@ public class SerialTestController implements  Rej006.PropertyChangedListener {
     }
 
 
-    @Override
-    public void onPropertyChanged(Rej006.Property property, Object value) {
-        switch (property) {
-            case NAME:
-                onLog("Name: " + value.toString());
-                break;
-            case ID:
-                onLog("Id: " + value.toString());
-                break;
-            case FIRMWARE:
-                onLog("Firmware: " + value.toString());
-                break;
-        }
-    }
 }

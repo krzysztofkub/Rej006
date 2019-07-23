@@ -1,24 +1,20 @@
 import com.fazecast.jSerialComm.SerialPort;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.ReadOnlyBooleanWrapper;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
-import javax.swing.event.ChangeListener;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 
 public class Rej006 {
+
+    public Rej006ViewModel getViewModel() {
+        return m_vm;
+    }
 
     //region Property Changed Listener Stuff
 
@@ -72,6 +68,8 @@ public class Rej006 {
 
     private SerialPort m_port;
 
+    private Rej006ViewModel m_vm;
+
     private ExecutorService m_executor;
 
     //endregion
@@ -93,6 +91,7 @@ public class Rej006 {
         m_port.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
         m_port.setParity(SerialPort.NO_PARITY);
 
+        m_vm = new Rej006ViewModel();
     }
 
     public void open() {
@@ -104,7 +103,7 @@ public class Rej006 {
 
                 Debugger.log("[REJ006] Port: " + m_port.getSystemPortName() + " is opened: " + m_port.isOpen());
 
-                notifyOfPropertyChanged(Property.IS_OPEN, m_port.isOpen());
+                m_vm.isOpenProperty.setValue(m_port.isOpen());
             }
         };
         m_executor.submit(task);
@@ -151,8 +150,10 @@ public class Rej006 {
 
                 Debugger.log("[REJ006] Name: " + name + ", id: " + id);
 
-                notifyOfPropertyChanged(Property.ID, id);
-                notifyOfPropertyChanged(Property.NAME, name);
+                Platform.runLater(() -> {
+                    m_vm.nameProperty.set(name);
+                    m_vm.idProperty.set(Integer.parseInt(id));
+                });
 
                 return null;
             }
